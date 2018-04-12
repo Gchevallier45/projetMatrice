@@ -80,7 +80,7 @@ template<class Type> void CMatrice<Type>::MATSetDimensions(unsigned int uiColonn
 	}*/
 }
 
-template<class Type> void CMatrice<Type>::MATSetElement(unsigned int uiColonne, unsigned int uiLigne, Type element)
+template<class Type> void CMatrice<Type>::MATSetElement(unsigned int uiLigne, unsigned int uiColonne, Type element)
 {
 	vMATmatrice[uiLigne][uiColonne] = element;
 }
