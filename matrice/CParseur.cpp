@@ -44,7 +44,7 @@ CParseur::CParseur(string sCheminFichier)
 					strcpy_s(pcEnd, sLigne.length()+1,sLigne.c_str());
 					for (unsigned int uiBoucle = 0; uiBoucle<uiNbColonnes; uiBoucle++) {
 						double test = strtod(pcEnd, &pcEnd);
-							MATmatrice.MATObtenirDonnees()[uiLigne - 4][uiBoucle] = test;
+						MATmatrice.MATSetElement(uiLigne - 4,uiBoucle,test);
 					}
 					break;
 				}
