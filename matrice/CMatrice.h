@@ -19,17 +19,12 @@ public:
 	CMatrice<Type>& operator / (double dParam);
 	CMatrice<Type>& operator = (CMatrice &MATParam);
 	CMatrice<Type>& operator - (CMatrice &MATParam);
-<<<<<<< HEAD
 	CMatrice<Type>& operator * (double);
 	CMatrice<Type>& operator * (CMatrice<Type> &);
 	CMatrice<Type>& operator + (CMatrice<Type> &);
-	Type ** MATObtenirDonnees();
-=======
-	vector<vector<Type>> MATObtenirDonnees();
->>>>>>> 78481a60756971a8e1a379e21e3a7f2061fe1b04
 	void MATAfficherMatrice();
 	void MATInitMatrice();
-	void MATSetDimensions(unsigned int uiColonnes,unsigned int uiLignes);
+	void MATSetDimensions(unsigned int uiLignes, unsigned int uiColonnes);
 	void MATSetElement(unsigned int uiLigne, unsigned int uiColonne, Type element);
 	Type MATGetElement(unsigned int uiLigne, unsigned int uiColonne);
 	unsigned int MATObtenirColonnes();
@@ -44,9 +39,13 @@ template<class Type> CMatrice<Type>::CMatrice()
 }
 
 template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
-	:uiMATcolonnes(MATParam.uiMATcolonnes), uiMATlignes(MATParam.uiMATlignes)
 {
-	vMATmatrice = MATParam.MATObtenirDonnees();
+	MATSetDimensions(MATParam.MATObtenirLignes(), MATParam.MATObtenirColonnes());
+	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
+		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
+			MATSetElement(uiLigne, uiColonne, MATParam.MATGetElement(uiLigne, uiColonne));
+		}
+	}
 }
 
 template<class Type> void CMatrice<Type>::MATInitMatrice() {
@@ -61,7 +60,7 @@ template<class Type> void CMatrice<Type>::MATInitMatrice() {
 	}
 }
 
-template<class Type> void CMatrice<Type>::MATSetDimensions(unsigned int uiColonnes, unsigned int uiLignes)
+template<class Type> void CMatrice<Type>::MATSetDimensions(unsigned int uiLignes, unsigned int uiColonnes)
 {
 	uiMATcolonnes = uiColonnes;
 	uiMATlignes = uiLignes;
@@ -125,7 +124,13 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator/(double dParam)
 
 template<class Type> CMatrice<Type>& CMatrice<Type>::operator=(CMatrice & MATParam)
 {
-	vMATmatrice = MATParam.MATObtenirDonnees();
+	//vMATmatrice = MATParam.MATObtenirDonnees();
+	MATSetDimensions(MATParam.MATObtenirLignes(), MATParam.MATObtenirColonnes());
+	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
+		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
+			MATSetElement(uiLigne, uiColonne, MATParam.MATGetElement(uiLigne, uiColonne));
+		}
+	}
 	return *this;
 }
 
@@ -144,11 +149,6 @@ template<class Type> CMatrice<Type>& CMatrice<Type>::operator-(CMatrice & MATPar
 	else {
 		throw CException("Soustraction de 2 matrices qui n'ont pas la meme taille.");
 	}
-}
-
-template<class Type> vector<vector<Type>> CMatrice<Type>::MATObtenirDonnees()
-{
-	return vMATmatrice;
 }
 
 template<class Type> void CMatrice<Type>::MATAfficherMatrice()

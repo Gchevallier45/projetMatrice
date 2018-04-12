@@ -35,7 +35,7 @@ CParseur::CParseur(string sCheminFichier)
 				case 2:
 					sLigne = sLigne.substr(sLigne.find("=") + 1, sLigne.size());
 					uiNbColonnes = (unsigned int)std::stod(sLigne);
-					MATmatrice.MATSetDimensions(uiNbColonnes, uiNbLignes);
+					MATmatrice.MATSetDimensions(uiNbLignes, uiNbColonnes);
 					break;
 				case 3:
 					break;
