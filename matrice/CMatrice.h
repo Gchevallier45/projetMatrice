@@ -19,7 +19,14 @@ public:
 	CMatrice<Type>& operator / (double dParam);
 	CMatrice<Type>& operator = (CMatrice &MATParam);
 	CMatrice<Type>& operator - (CMatrice &MATParam);
+<<<<<<< HEAD
+	CMatrice<Type>& operator * (double);
+	CMatrice<Type>& operator * (CMatrice<Type> &);
+	CMatrice<Type>& operator + (CMatrice<Type> &);
+	Type ** MATObtenirDonnees();
+=======
 	vector<vector<Type>> MATObtenirDonnees();
+>>>>>>> 78481a60756971a8e1a379e21e3a7f2061fe1b04
 	void MATAfficherMatrice();
 	void MATInitMatrice();
 	void MATSetDimensions(unsigned int uiColonnes,unsigned int uiLignes);
@@ -160,6 +167,64 @@ template<class Type> CMatrice<Type>::~CMatrice()
 		delete[] vMATmatrice[uiLigne];
 	}
 	delete[] vMATmatrice;*/
+}
+template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
+{
+	CMatrice<Type> *temp = new CMatrice<Type>(*this);
+	for (unsigned int uiCompteLignes = 0; uiCompteLignes < uiMATlignes; uiCompteLignes++) {
+		for (unsigned int uiCompteCol = 0; uiCompteCol < uiMATcolonnes; uiCompteCol++) {
+
+			temp->MATObtenirDonnees()[uiCompteLignes][uiCompteCol] *= dParam;
+		}
+	}
+	return *temp;
+}
+
+
+template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> & MATTemp)
+{
+	// TODO: insérer une instruction return ici
+	if (MATObtenirColonnes() == MATTemp.MATObtenirLignes()) {
+		CMatrice<Type> *temp = new CMatrice<Type>();
+		temp->MATSetDimensions(MATObtenirLignes(), MATTemp.MATObtenirColonnes());
+		//on parcourt les lignes de la nouvelle matrice
+		for (unsigned int uiCompteNouvMatLigne = 0; uiCompteNouvMatLigne < temp->MATObtenirLignes(); uiCompteNouvMatLigne++) {
+			//on parcourt les colonnes de chaque ligne de la nouvelle matrice
+			for (unsigned int uiCompteNouvMatCol = 0; uiCompteNouvMatCol < temp->MATObtenirColonnes(); uiCompteNouvMatCol++) {
+				//on rempli la nouvelle matrice. On a un seul compteur car pour faire le produit
+				//de 2 matrices il faut NbLigneA = NbColB
+				for (unsigned int uiCompteur = 0; uiCompteur < MATTemp.MATObtenirLignes(); uiCompteur++) {
+
+					temp->ptMATmatrice[uiCompteNouvMatLigne][uiCompteNouvMatCol] +=
+						ptMATmatrice[uiCompteNouvMatLigne][uiCompteur] * MATTemp.ptMATmatrice[uiCompteur][uiCompteNouvMatCol];
+
+
+				}//on parcourt la matrice à remplir et on met la somme des produit dans chaque case
+			}
+		}
+		return *temp;
+	}
+
+}
+
+
+
+template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> & MATTemp)
+{
+	if ((MATObtenirLignes() == MATTemp.MATObtenirLignes()) && (MATObtenirColonnes() == MATTemp.MATObtenirColonnes())) {
+		CMatrice<Type> *temp = new CMatrice<Type>(*this);
+		for (unsigned int uiCompteLignes = 0; uiCompteLignes < uiMATlignes; uiCompteLignes++) {
+			for (unsigned int uiCompteCol = 0; uiCompteCol < uiMATcolonnes; uiCompteCol++) {
+
+				temp->MATObtenirDonnees()[uiCompteLignes][uiCompteCol] += MATTemp.ptMATmatrice[uiCompteLignes][uiCompteCol];
+			}
+		}
+		return *temp;
+	}
+	else {
+		throw CException("pas les bonnes dimensions");
+	}
+
 }
 
 #endif // CMATRICE_H
