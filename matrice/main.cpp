@@ -9,7 +9,7 @@ int main()
 	try {
 		CParseur salut("C:/logs/matrice.txt");
 		CMatrice<double> matfichier = salut.PARGetMatrice();
-		matfichier.MATAfficherMatrice();
+		(matfichier*2).MATAfficherMatrice();
 		matfichier.MATTransposee().MATAfficherMatrice();
 		cout << endl;
 

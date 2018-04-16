@@ -221,8 +221,6 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> &
 
 }
 
-
-
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> & MATTemp)
 {
 	if ((MATObtenirLignes() == MATTemp.MATObtenirLignes()) && (MATObtenirColonnes() == MATTemp.MATObtenirColonnes())) {
@@ -239,6 +237,12 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> &
 		throw CException("pas les bonnes dimensions");
 	}
 
+}
+
+template<class Type> CMatrice<Type> & operator*(double dParam, CMatrice<Type> & MATTemp)
+{
+	CMatrice<Type> *temp = MATTemp * dParam;
+	return *temp;
 }
 
 #endif // CMATRICE_H
