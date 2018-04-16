@@ -52,9 +52,7 @@ template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
 template<class Type> void CMatrice<Type>::MATInitMatrice() {
 	cin >> uiMATlignes;
 	cin >> uiMATcolonnes;
-	//vMATmatrice = new Type*[uiMATlignes];
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
-		//vMATmatrice[uiLigne] = new Type[uiMATcolonnes];
 		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
 			cin >> vMATmatrice.at(uiLigne).at(uiColonne);
 		}
@@ -63,28 +61,15 @@ template<class Type> void CMatrice<Type>::MATInitMatrice() {
 
 template<class Type> void CMatrice<Type>::MATSetDimensions(unsigned int uiLignes, unsigned int uiColonnes)
 {
-	uiMATcolonnes = uiColonnes;
-	uiMATlignes = uiLignes;
-	/*vector<Type> blankVector;
-	blankVector.reserve(uiColonnes);*/
-	vMATmatrice = vector<vector<Type>>(uiMATlignes, vector<Type>(uiMATcolonnes));
-	/*if (uiColonnes != 0 && uiLignes != 0) {
-		if (uiMATcolonnes != 0 && uiMATlignes != 0) {
-			for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
-				delete[] vMATmatrice[uiLigne];
-			}
-			delete[] vMATmatrice;
-		}
+	if (uiLignes != 0 && uiColonnes != 0) {
 		uiMATcolonnes = uiColonnes;
 		uiMATlignes = uiLignes;
-		vMATmatrice = new Type*[uiMATlignes];
-		for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
-			vMATmatrice[uiLigne] = new Type[uiMATcolonnes];
-		}
+		vMATmatrice.clear();
+		vMATmatrice = vector<vector<Type>>(uiMATlignes, vector<Type>(uiMATcolonnes));
 	}
 	else {
-		throw CException("Impossible d'allouer une matrice avec des 0 lignes ou colonnes.");
-	}*/
+		throw CException("Impossible d'allouer une matrice 0x0");
+	}
 }
 
 template<class Type> void CMatrice<Type>::MATSetElement(unsigned int uiLigne, unsigned int uiColonne, Type element)
@@ -109,7 +94,7 @@ template<class Type> unsigned int CMatrice<Type>::MATObtenirLignes()
 
 template<class Type> CMatrice<Type>& CMatrice<Type>::MATTransposee()
 {
-	CMatrice<Type> *temp = new CMatrice<Type>(*this);
+	CMatrice<Type> *temp = new CMatrice<Type>();
 	temp->MATSetDimensions(MATObtenirColonnes(), MATObtenirLignes());
 	for (unsigned int uiLigne = 0; uiLigne < temp->MATObtenirLignes(); uiLigne++) {
 		for (unsigned int uiColonne = 0; uiColonne <  temp->MATObtenirColonnes(); uiColonne++) {
@@ -137,7 +122,6 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator/(double dParam)
 
 template<class Type> CMatrice<Type>& CMatrice<Type>::operator=(CMatrice & MATParam)
 {
-	//vMATmatrice = MATParam.MATObtenirDonnees();
 	MATSetDimensions(MATParam.MATObtenirLignes(), MATParam.MATObtenirColonnes());
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
@@ -153,7 +137,6 @@ template<class Type> CMatrice<Type>& CMatrice<Type>::operator-(CMatrice & MATPar
 		CMatrice<Type> *temp = new CMatrice<Type>(*this);
 		for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 			for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
-				//temp->MATObtenirDonnees().at(uiLigne).at(uiColonne) -= MATParam.vMATmatrice.at(uiLigne).at(uiColonne);
 				temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) - MATParam.MATGetElement(uiLigne, uiColonne));
 			}
 		}
@@ -177,10 +160,6 @@ template<class Type> void CMatrice<Type>::MATAfficherMatrice()
 
 template<class Type> CMatrice<Type>::~CMatrice()
 {
-	/*for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
-		delete[] vMATmatrice[uiLigne];
-	}
-	delete[] vMATmatrice;*/
 }
 
 
@@ -189,7 +168,6 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 	CMatrice<Type> *temp = new CMatrice<Type>(*this);
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
-			//temp->MATObtenirDonnees().at(uiLigne).at(uiColonne) -= MATParam.vMATmatrice.at(uiLigne).at(uiColonne);
 			temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) * dParam);
 		}
 	}
@@ -199,7 +177,6 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> & MATParam)
 {
-	// TODO: insérer une instruction return ici
 	if (MATObtenirColonnes() == MATParam.MATObtenirLignes()) {
 		CMatrice<Type> *temp = new CMatrice<Type>();
 		temp->MATSetDimensions(MATObtenirLignes(), MATParam.MATObtenirColonnes());
@@ -230,7 +207,6 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> &
 		CMatrice<Type> *temp = new CMatrice<Type>(*this);
 		for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 			for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
-				//temp->MATObtenirDonnees().at(uiLigne).at(uiColonne) -= MATParam.vMATmatrice.at(uiLigne).at(uiColonne);
 				temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) + MATParam.MATGetElement(uiLigne, uiColonne));
 			}
 		}
