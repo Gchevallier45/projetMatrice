@@ -1,7 +1,14 @@
-﻿  CParseur.cpp
-  Génération de code en cours...
-  Compilation en cours...
+﻿  stdafx.cpp
+  CException.cpp
+  CParseur.cpp
   main.cpp
+c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cmatrice.h(44): error C2039: 'MATObtenirDonnees' : n'est pas membre de 'CMatrice<double>'
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cparseur.h(15): note: voir la déclaration de 'CMatrice<double>'
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cmatrice.h(42): note: pendant la compilation de la fonction membre '<Inconnu>' (classe <Inconnu>)
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\main.cpp(11): note: voir la référence à l'instanciation de la fonction modèle 'CMatrice<double>::CMatrice(CMatrice<double> &)' en cours de compilation
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cparseur.h(15): note: voir la référence à l'instanciation de classe modèle 'CMatrice<double>' en cours de compilation
+c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cmatrice.h(123): error C2039: 'MATObtenirDonnees' : n'est pas membre de 'CMatrice<double>'
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cparseur.h(15): note: voir la déclaration de 'CMatrice<double>'
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\cmatrice.h(122): note: pendant la compilation de la fonction membre '<Inconnu>' (classe <Inconnu>)
+  c:\users\robin\desktop\travail cours\projetmatrice\projetmatrice\matrice\main.cpp(25): note: voir la référence à l'instanciation de la fonction modèle 'CMatrice<double> &CMatrice<double>::operator =(CMatrice<double> &)' en cours de compilation
   Génération de code en cours...
-  matrice.vcxproj -> C:\Users\gcdu9\Documents\Polytech\A3\C++\projetMatrice\projetMatrice\x64\Debug\matrice.exe
-  matrice.vcxproj -> C:\Users\gcdu9\Documents\Polytech\A3\C++\projetMatrice\projetMatrice\x64\Debug\matrice.pdb (Full PDB)
