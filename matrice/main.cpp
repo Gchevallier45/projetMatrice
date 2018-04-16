@@ -3,9 +3,12 @@
 #include "CException.h"
 #include "CParseur.h"
 
-int main()
+int main(char** argc, int argv)
 {
-	cout << "--- Matrice des familles ---" << endl;
+	cout << "--- Matrice ---" << endl;
+	for (unsigned int uiArg = 0; uiArg < argv; uiArg++) {
+
+	}
 	try {
 		CParseur salut("C:/logs/matrice.txt");
 		CMatrice<double> matfichier = salut.PARGetMatrice();
