@@ -52,6 +52,7 @@ template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
 template<class Type> void CMatrice<Type>::MATInitMatrice() {
 	cin >> uiMATlignes;
 	cin >> uiMATcolonnes;
+	MATSetDimensions(uiMATlignes, uiMATcolonnes);
 	//vMATmatrice = new Type*[uiMATlignes];
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 		//vMATmatrice[uiLigne] = new Type[uiMATcolonnes];
@@ -183,7 +184,6 @@ template<class Type> CMatrice<Type>::~CMatrice()
 	delete[] vMATmatrice;*/
 }
 
-
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 {
 	CMatrice<Type> *temp = new CMatrice<Type>(*this);
@@ -209,11 +209,12 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> &
 			for (unsigned int uiColonne = 0; uiColonne < temp->MATObtenirColonnes(); uiColonne++) {
 				//on rempli la nouvelle matrice. On a un seul compteur car pour faire le produit
 				//de 2 matrices il faut NbLigneA = NbColB
-				for (unsigned int uiCompteur = 0; uiCompteur < MATTemp.MATObtenirLignes(); uiCompteur++) {
+				for (unsigned int uiCompteur = 0; uiCompteur < MATParam.MATObtenirLignes(); uiCompteur++) {
 
 					//temp->ptMATmatrice[uiCompteNouvMatLigne][uiCompteNouvMatCol] +=
 						//ptMATmatrice[uiCompteNouvMatLigne][uiCompteur] * MATTemp.ptMATmatrice[uiCompteur][uiCompteNouvMatCol];
-					temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiCompteur) - MATParam.MATGetElement(uiCompteur, uiColonne));
+					temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) +
+						MATGetElement(uiLigne, uiCompteur) * MATParam.MATGetElement(uiCompteur, uiColonne));
 
 
 				}//on parcourt la matrice à remplir et on met la somme des produit dans chaque case
