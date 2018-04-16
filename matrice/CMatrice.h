@@ -29,6 +29,7 @@ public:
 	Type MATGetElement(unsigned int uiLigne, unsigned int uiColonne);
 	unsigned int MATObtenirColonnes();
 	unsigned int MATObtenirLignes();
+	CMatrice<Type>& MATTransposee();
 	~CMatrice();
 };
 
@@ -106,6 +107,18 @@ template<class Type> unsigned int CMatrice<Type>::MATObtenirLignes()
 	return uiMATlignes;
 }
 
+template<class Type> CMatrice<Type>& CMatrice<Type>::MATTransposee()
+{
+	CMatrice<Type> *temp = new CMatrice<Type>(*this);
+	temp->MATSetDimensions(MATObtenirColonnes(), MATObtenirLignes());
+	for (unsigned int uiLigne = 0; uiLigne < temp->MATObtenirLignes(); uiLigne++) {
+		for (unsigned int uiColonne = 0; uiColonne <  temp->MATObtenirColonnes(); uiColonne++) {
+			temp->MATSetElement(uiLigne, uiColonne, MATGetElement(uiColonne,uiLigne));
+		}
+	}
+	return *temp;
+}
+
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator/(double dParam)
 {
 	if (dParam != 0) {
@@ -168,6 +181,7 @@ template<class Type> CMatrice<Type>::~CMatrice()
 	}
 	delete[] vMATmatrice;*/
 }
+
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 {
 	CMatrice<Type> *temp = new CMatrice<Type>(*this);
