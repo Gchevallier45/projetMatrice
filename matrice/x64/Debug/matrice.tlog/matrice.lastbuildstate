@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.16299.0
+<<<<<<< HEAD
 Debug|x64|C:\Users\robin\Desktop\travail cours\projetMatrice\projetMatrice\|
+=======
+Debug|x64|C:\Users\gcdu9\Documents\Polytech\A3\C++\projetMatrice\projetMatrice\|
+>>>>>>> 28ddd2545b33e7d798665a5dc3ecd720d11bd293
