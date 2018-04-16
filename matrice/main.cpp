@@ -5,7 +5,23 @@
 
 int main()
 {
-	cout << "--- Matrice des familles ---" << endl;
+
+	CMatrice<double> MATtmp(vMatrice[0]);
+	for (unsigned int uiCompteur = 1; uiCompteur < argv; i++) {
+		if (uiCompteur % 2 == 0) {
+			MATtmp[uiCompteur] += vMatrice[uiCompteur];
+		}
+		else {
+			MATtmp[uiCompteur] -= vMatrice[uiCompteur];
+		}
+
+	}
+
+	CMatrice<double> MATtmp(vMatrice[0]);
+	for (unsigned int uiCompteur = 1; uiCompteur < argv; i++) {
+		MATtmp[uiCompteur] *= vMatrice[uiCompteur];
+	}
+	/*
 	try {
 	
 		CParseur salut("C:/logs/matrice.txt");
@@ -26,13 +42,15 @@ int main()
 		/*CMatrice<double> result = coucou / 2;
 		CMatrice<double> result2 = coucou / 0;
 		result.MATAfficherMatrice();
-		result2.MATAfficherMatrice();*/
+		result2.MATAfficherMatrice();
 		matfichier = matfichier * matfichier;
 		matfichier.MATAfficherMatrice();
 	}
 	catch (CException &EXCParam) {
 		EXCParam.EXCAfficherMessage();
 	}
+	*/
+
     return 0;
 }
 

@@ -52,11 +52,8 @@ template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
 template<class Type> void CMatrice<Type>::MATInitMatrice() {
 	cin >> uiMATlignes;
 	cin >> uiMATcolonnes;
-<<<<<<< HEAD
 	MATSetDimensions(uiMATlignes, uiMATcolonnes);
 	//vMATmatrice = new Type*[uiMATlignes];
-=======
->>>>>>> 28ddd2545b33e7d798665a5dc3ecd720d11bd293
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
 			cin >> vMATmatrice.at(uiLigne).at(uiColonne);
