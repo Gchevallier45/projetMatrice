@@ -17,8 +17,8 @@ public:
 	CMatrice();
 	CMatrice(CMatrice &MATParam);
 	CMatrice<Type>& operator / (double dParam);
-	CMatrice<Type>& operator = (CMatrice &MATParam);
-	CMatrice<Type>& operator - (CMatrice &MATParam);
+	CMatrice<Type>& operator = (CMatrice<Type> &MATParam);
+	CMatrice<Type>& operator - (CMatrice<Type> &MATParam);
 	CMatrice<Type>& operator * (double);
 	CMatrice<Type>& operator * (CMatrice<Type> &);
 	CMatrice<Type>& operator + (CMatrice<Type> &);
@@ -39,7 +39,7 @@ template<class Type> CMatrice<Type>::CMatrice()
 	uiMATcolonnes = 0;
 }
 
-template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
+template<class Type> CMatrice<Type>::CMatrice(CMatrice<Type> & MATParam)
 {
 	MATSetDimensions(MATParam.MATObtenirLignes(), MATParam.MATObtenirColonnes());
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
@@ -52,6 +52,7 @@ template<class Type> CMatrice<Type>::CMatrice(CMatrice & MATParam)
 template<class Type> void CMatrice<Type>::MATInitMatrice() {
 	cin >> uiMATlignes;
 	cin >> uiMATcolonnes;
+	MATSetDimensions(uiMATlignes, uiMATcolonnes);
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
 		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
 			cin >> vMATmatrice.at(uiLigne).at(uiColonne);
@@ -120,7 +121,7 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator/(double dParam)
 	}
 }
 
-template<class Type> CMatrice<Type>& CMatrice<Type>::operator=(CMatrice & MATParam)
+template<class Type> CMatrice<Type>& CMatrice<Type>::operator=(CMatrice<Type> & MATParam)
 {
 	MATSetDimensions(MATParam.MATObtenirLignes(), MATParam.MATObtenirColonnes());
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
@@ -131,7 +132,7 @@ template<class Type> CMatrice<Type>& CMatrice<Type>::operator=(CMatrice & MATPar
 	return *this;
 }
 
-template<class Type> CMatrice<Type>& CMatrice<Type>::operator-(CMatrice & MATParam)
+template<class Type> CMatrice<Type>& CMatrice<Type>::operator-(CMatrice<Type> & MATParam)
 {
 	if (uiMATcolonnes == MATParam.MATObtenirColonnes() && uiMATlignes == MATParam.MATObtenirLignes()) {
 		CMatrice<Type> *temp = new CMatrice<Type>(*this);
@@ -162,7 +163,6 @@ template<class Type> CMatrice<Type>::~CMatrice()
 {
 }
 
-
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 {
 	CMatrice<Type> *temp = new CMatrice<Type>(*this);
@@ -186,11 +186,12 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> &
 			for (unsigned int uiColonne = 0; uiColonne < temp->MATObtenirColonnes(); uiColonne++) {
 				//on rempli la nouvelle matrice. On a un seul compteur car pour faire le produit
 				//de 2 matrices il faut NbLigneA = NbColB
-				for (unsigned int uiCompteur = 0; uiCompteur < MATTemp.MATObtenirLignes(); uiCompteur++) {
+				for (unsigned int uiCompteur = 0; uiCompteur < MATParam.MATObtenirLignes(); uiCompteur++) {
 
 					//temp->ptMATmatrice[uiCompteNouvMatLigne][uiCompteNouvMatCol] +=
 						//ptMATmatrice[uiCompteNouvMatLigne][uiCompteur] * MATTemp.ptMATmatrice[uiCompteur][uiCompteNouvMatCol];
-					temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiCompteur) - MATParam.MATGetElement(uiCompteur, uiColonne));
+					temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) +
+						MATGetElement(uiLigne, uiCompteur) * MATParam.MATGetElement(uiCompteur, uiColonne));
 
 
 				}//on parcourt la matrice à remplir et on met la somme des produit dans chaque case
@@ -198,10 +199,13 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> &
 		}
 		return *temp;
 	}
+	else {
+		throw CException("La matrice ne peut pas etre multipliee avec l'autre");
+	}
 
 }
 
-template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> & MATTemp)
+template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> & MATParam)
 {
 	if (uiMATcolonnes == MATParam.MATObtenirColonnes() && uiMATlignes == MATParam.MATObtenirLignes()) {
 		CMatrice<Type> *temp = new CMatrice<Type>(*this);
@@ -217,9 +221,9 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> &
 	}
 }
 
-template<class Type> CMatrice<Type> & operator*(double dParam, CMatrice<Type> & MATTemp)
+template<class Type> CMatrice<Type> & operator*(double dParam, CMatrice<Type> & MATParam)
 {
-	CMatrice<Type> *temp = new CMatrice<Type>(MATTemp * dParam);
+	CMatrice<Type> *temp = new CMatrice<Type>(MATParam * dParam);
 	return *temp;
 }
 
