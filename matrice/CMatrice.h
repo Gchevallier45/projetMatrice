@@ -164,6 +164,7 @@ template<class Type> CMatrice<Type>& CMatrice<Type>::operator-(CMatrice & MATPar
 	}
 }
 
+
 template<class Type> void CMatrice<Type>::MATAfficherMatrice()
 {
 	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
@@ -182,35 +183,37 @@ template<class Type> CMatrice<Type>::~CMatrice()
 	delete[] vMATmatrice;*/
 }
 
+
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(double dParam)
 {
 	CMatrice<Type> *temp = new CMatrice<Type>(*this);
-	for (unsigned int uiCompteLignes = 0; uiCompteLignes < uiMATlignes; uiCompteLignes++) {
-		for (unsigned int uiCompteCol = 0; uiCompteCol < uiMATcolonnes; uiCompteCol++) {
-
-			temp->MATObtenirDonnees()[uiCompteLignes][uiCompteCol] *= dParam;
+	for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
+		for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
+			//temp->MATObtenirDonnees().at(uiLigne).at(uiColonne) -= MATParam.vMATmatrice.at(uiLigne).at(uiColonne);
+			temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) * dParam);
 		}
 	}
 	return *temp;
 }
 
 
-template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> & MATTemp)
+template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> & MATParam)
 {
 	// TODO: insérer une instruction return ici
-	if (MATObtenirColonnes() == MATTemp.MATObtenirLignes()) {
+	if (MATObtenirColonnes() == MATParam.MATObtenirLignes()) {
 		CMatrice<Type> *temp = new CMatrice<Type>();
-		temp->MATSetDimensions(MATObtenirLignes(), MATTemp.MATObtenirColonnes());
+		temp->MATSetDimensions(MATObtenirLignes(), MATParam.MATObtenirColonnes());
 		//on parcourt les lignes de la nouvelle matrice
-		for (unsigned int uiCompteNouvMatLigne = 0; uiCompteNouvMatLigne < temp->MATObtenirLignes(); uiCompteNouvMatLigne++) {
+		for (unsigned int uiLigne = 0; uiLigne < temp->MATObtenirLignes(); uiLigne++) {
 			//on parcourt les colonnes de chaque ligne de la nouvelle matrice
-			for (unsigned int uiCompteNouvMatCol = 0; uiCompteNouvMatCol < temp->MATObtenirColonnes(); uiCompteNouvMatCol++) {
+			for (unsigned int uiColonne = 0; uiColonne < temp->MATObtenirColonnes(); uiColonne++) {
 				//on rempli la nouvelle matrice. On a un seul compteur car pour faire le produit
 				//de 2 matrices il faut NbLigneA = NbColB
 				for (unsigned int uiCompteur = 0; uiCompteur < MATTemp.MATObtenirLignes(); uiCompteur++) {
 
-					temp->ptMATmatrice[uiCompteNouvMatLigne][uiCompteNouvMatCol] +=
-						ptMATmatrice[uiCompteNouvMatLigne][uiCompteur] * MATTemp.ptMATmatrice[uiCompteur][uiCompteNouvMatCol];
+					//temp->ptMATmatrice[uiCompteNouvMatLigne][uiCompteNouvMatCol] +=
+						//ptMATmatrice[uiCompteNouvMatLigne][uiCompteur] * MATTemp.ptMATmatrice[uiCompteur][uiCompteNouvMatCol];
+					temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiCompteur) - MATParam.MATGetElement(uiCompteur, uiColonne));
 
 
 				}//on parcourt la matrice à remplir et on met la somme des produit dans chaque case
@@ -223,20 +226,19 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator*(CMatrice<Type> &
 
 template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> & MATTemp)
 {
-	if ((MATObtenirLignes() == MATTemp.MATObtenirLignes()) && (MATObtenirColonnes() == MATTemp.MATObtenirColonnes())) {
+	if (uiMATcolonnes == MATParam.MATObtenirColonnes() && uiMATlignes == MATParam.MATObtenirLignes()) {
 		CMatrice<Type> *temp = new CMatrice<Type>(*this);
-		for (unsigned int uiCompteLignes = 0; uiCompteLignes < uiMATlignes; uiCompteLignes++) {
-			for (unsigned int uiCompteCol = 0; uiCompteCol < uiMATcolonnes; uiCompteCol++) {
-
-				temp->MATObtenirDonnees()[uiCompteLignes][uiCompteCol] += MATTemp.ptMATmatrice[uiCompteLignes][uiCompteCol];
+		for (unsigned int uiLigne = 0; uiLigne < uiMATlignes; uiLigne++) {
+			for (unsigned int uiColonne = 0; uiColonne < uiMATcolonnes; uiColonne++) {
+				//temp->MATObtenirDonnees().at(uiLigne).at(uiColonne) -= MATParam.vMATmatrice.at(uiLigne).at(uiColonne);
+				temp->MATSetElement(uiLigne, uiColonne, temp->MATGetElement(uiLigne, uiColonne) + MATParam.MATGetElement(uiLigne, uiColonne));
 			}
 		}
 		return *temp;
 	}
 	else {
-		throw CException("pas les bonnes dimensions");
+		throw CException("Addition de 2 matrices qui n'ont pas la meme taille.");
 	}
-
 }
 
 template<class Type> CMatrice<Type> & operator*(double dParam, CMatrice<Type> & MATTemp)
