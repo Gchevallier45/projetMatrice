@@ -243,7 +243,7 @@ template<class Type> CMatrice<Type> & CMatrice<Type>::operator+(CMatrice<Type> &
 
 template<class Type> CMatrice<Type> & operator*(double dParam, CMatrice<Type> & MATTemp)
 {
-	CMatrice<Type> *temp = MATTemp * dParam;
+	CMatrice<Type> *temp = new CMatrice<Type>(MATTemp * dParam);
 	return *temp;
 }
 

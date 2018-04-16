@@ -1,6 +1,4 @@
-﻿  stdafx.cpp
-  CException.cpp
-  CParseur.cpp
+﻿  CParseur.cpp
   main.cpp
   Génération de code en cours...
   matrice.vcxproj -> C:\Users\gcdu9\Documents\Polytech\A3\C++\projetMatrice\projetMatrice\x64\Debug\matrice.exe
